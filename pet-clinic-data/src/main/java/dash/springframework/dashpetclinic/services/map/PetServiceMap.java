@@ -1,11 +1,11 @@
 package dash.springframework.dashpetclinic.services.map;
 
 import dash.springframework.dashpetclinic.model.Pet;
-import dash.springframework.dashpetclinic.services.CrudService;
+import dash.springframework.dashpetclinic.services.PetService;
 
 import java.util.Set;
 
-public class PetServiceMap extends AbstractMapService<Pet, Long> implements CrudService<Pet, Long> {
+public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
     @Override
     public Pet findById(Long id) {
         return super.findById(id);
