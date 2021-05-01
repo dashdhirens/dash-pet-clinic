@@ -6,5 +6,23 @@
 </head>
 <body>
     <h1 th:text="'List All Vets'">List all vets....</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="owner" type="dash.springframework.dashpetclinic.model.Vet"*/-->
+        <tr th:each="vet : ${vets}">
+            <td th:text="${vet.id}">ID</td>
+            <td th:text="${vet.firstName}">FName</td>
+            <td th:text="${vet.lastName}">LName</td>
+        </tr>
+        </tbody>
+    </table>
 </body>
 </html>
