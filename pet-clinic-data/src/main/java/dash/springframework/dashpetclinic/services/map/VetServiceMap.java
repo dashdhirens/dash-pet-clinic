@@ -1,6 +1,7 @@
 package dash.springframework.dashpetclinic.services.map;
 
 import dash.springframework.dashpetclinic.model.Vet;
+import dash.springframework.dashpetclinic.services.SpecialityService;
 import dash.springframework.dashpetclinic.services.VetService;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,13 @@ import java.util.Set;
 
 @Service
 public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetService {
+
+    private final SpecialityService specialityService;
+
+    public VetServiceMap(SpecialityService specialityService) {
+        this.specialityService = specialityService;
+    }
+
     @Override
     public Vet findById(Long id) {
         return super.findById(id);
@@ -30,6 +38,14 @@ public class VetServiceMap extends AbstractMapService<Vet, Long> implements VetS
 
     @Override
     public Vet save(Vet object) {
+
+        if (object.getSpecialities().size() > 0) {
+            object.getSpecialities().forEach(speciality -> {
+                if (speciality.getId() == null) {
+                    speciality = specialityService.save(speciality);
+                }
+            });
+        }
         return super.save(object);
     }
 }
