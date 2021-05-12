@@ -1,14 +1,12 @@
 package dash.springframework.dashpetclinic.bootstrap;
 
 import dash.springframework.dashpetclinic.model.*;
-import dash.springframework.dashpetclinic.services.OwnerService;
-import dash.springframework.dashpetclinic.services.PetTypeService;
-import dash.springframework.dashpetclinic.services.SpecialityService;
-import dash.springframework.dashpetclinic.services.VetService;
+import dash.springframework.dashpetclinic.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -17,12 +15,14 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
 
         System.out.println("--------In bootstrap dataloader constructor....");
     }
@@ -92,6 +92,12 @@ public class DataLoader implements CommandLineRunner {
         ownerService.save(owner1);
         ownerService.save(owner2);
         System.out.println("Loaded owners........");
+
+        //Create and initialize, save visits
+        Visit catVisit = new Visit();
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Little kitty");
+        catVisit.setPet(jessPet);
 
         Vet vet1 = new Vet();
         vet1.setFirstName("Maker");
